@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ison.app.dao.InventoryDAO;
 import com.ison.app.model.KeyValueObject;
 import com.ison.app.services.InventoryService;
+import com.ison.app.shared.dto.ClientKVDto;
 import com.ison.app.shared.dto.InventoryDto;
 import com.ison.app.util.CommonUtil;
 
@@ -72,4 +73,9 @@ public class InventoryServiceImpl implements InventoryService{
 		return inventoryDto.isFlag();
 	}
 
+	@Override
+	public InventoryDto getMappedInventoryList() throws Exception {
+		return inventoryDAO.getMappedInventoryList();
+	}
+	
 }

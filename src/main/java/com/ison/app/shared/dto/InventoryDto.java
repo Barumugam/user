@@ -39,7 +39,19 @@ public class InventoryDto {
 	
 	public BigInteger inventoryClientId;
 	
-	private String autogenInventoryMappingId;
+	public String inventoryRegionName;
+	
+	public String inventoryCenterName;
+	
+	public String inventoryClientName;
+	
+	public String inventoryProcessName;
+	
+	public String autogenInventoryMappingId;
+	
+	public Object result;
+	
+	public List<ClientKVDto> resultList;
 	
 	public InventoryDto() {}
 
@@ -175,4 +187,54 @@ public class InventoryDto {
 		this.inventoryClientId = inventoryClientId;
 	}
 
+	public String getInventoryRegionName() {
+		return inventoryRegionName;
+	}
+
+	public void setInventoryRegionName(String inventoryRegionName) {
+		this.inventoryRegionName = inventoryRegionName;
+	}
+
+	public String getInventoryCenterName() {
+		return inventoryCenterName;
+	}
+
+	public void setInventoryCenterName(String inventoryCenterName) {
+		this.inventoryCenterName = inventoryCenterName;
+	}
+
+	public String getInventoryClientName() {
+		return inventoryClientName;
+	}
+
+	public void setInventoryClientName(String inventoryClientName) {
+		this.inventoryClientName = inventoryClientName;
+	}
+
+	public String getInventoryProcessName() {
+		return inventoryProcessName;
+	}
+
+	public void setInventoryProcessName(String inventoryProcessName) {
+		this.inventoryProcessName = inventoryProcessName;
+	}
+
+	public Object getResult() {
+		return result;
+	}
+
+	public void setResult(Object result) {
+		this.result = result;
+	}
+
+	public List<ClientKVDto> getResultList() {
+		return resultList;
+	}
+
+	public void setResultList(List<ClientKVDto> resultList) {
+		this.resultList = resultList;
+	}
+	
+	
+	
 }

@@ -1,0 +1,121 @@
+package com.ison.app.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ison.app.constants.StatusCodeConstants;
+import com.ison.app.message.request.ClientCenterRequest;
+import com.ison.app.message.request.ClientCreateRequest;
+import com.ison.app.message.request.ClientRegionRequest;
+import com.ison.app.message.request.ClientReportMapCreateRequest;
+import com.ison.app.message.request.ContactDetails;
+import com.ison.app.message.response.ClientCreateResponse;
+import com.ison.app.message.response.GenericResponse;
+import com.ison.app.model.ClientReportMap;
+import com.ison.app.services.ClientService;
+import com.ison.app.shared.dto.ClientDetailDto;
+import com.ison.app.shared.dto.ContactDetailDto;
+import com.ison.app.util.CommonUtil;
+
+@RestController
+@RequestMapping("/client")
+public class ClientController {
+	
+	@Autowired
+	ClientService clientService;
+	
+	@PostMapping("/create")
+	public ResponseEntity<GenericResponse> create(@Valid @RequestBody ClientCreateRequest clientCreateRequest) throws Exception {
+
+		GenericResponse genericResponse = new GenericResponse();
+		if(clientCreateRequest != null) {
+			List<ClientDetailDto> clientDetailDtoList = new ArrayList<>(); 
+			for (ClientRegionRequest clientRegionRequest : clientCreateRequest.getClientRegions()) {
+				for (ClientCenterRequest clientCenterRequest : clientRegionRequest.getClientCenters()) {
+					ClientDetailDto clientDetailDto = new ClientDetailDto();
+					CommonUtil.copyProperties(clientCreateRequest, clientDetailDto);
+					CommonUtil.copyProperties(clientRegionRequest, clientDetailDto);
+					CommonUtil.copyProperties(clientCenterRequest, clientDetailDto);
+					List<ContactDetailDto> contactDetailDtos = new ArrayList<>();
+					for (ContactDetails contactDetails : clientCenterRequest.getContactDetails()) {
+						ContactDetailDto contactDetailDto = new ContactDetailDto();
+						CommonUtil.copyProperties(contactDetails, contactDetailDto);
+						List<ClientReportMap> clientReportMaps = new ArrayList<>();
+						for (ClientReportMapCreateRequest clientReportMapCreateRequest : contactDetails.getClientReportMaps()) {
+							ClientReportMap  clientReportMap = new ClientReportMap();
+							CommonUtil.copyProperties(clientReportMapCreateRequest, clientReportMap);	
+							clientReportMaps.add(clientReportMap);
+						}
+						contactDetailDto.setClientReportMaps(clientReportMaps);
+						contactDetailDtos.add(contactDetailDto);
+					}
+					clientDetailDto.setContactDetails(contactDetailDtos);
+					clientDetailDtoList.add(clientDetailDto);
+				}
+			}
+			
+			ClientDetailDto clientDetailDto = clientService.create(clientDetailDtoList);
+			if(clientDetailDto != null && clientDetailDto.getResultObj().length > 0) {
+				Object[] result = clientDetailDto.getResultObj();
+				boolean flag = (boolean) result[0];
+				if(flag) {
+				    	genericResponse.setStatus(StatusCodeConstants.CREATE);
+				    	genericResponse.setError("Success");
+				    	genericResponse.setMessage("Success -> Client Details Configured successfully!");
+				} else {
+					genericResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+			    	genericResponse.setError("Failure");
+			    	genericResponse.setMessage("Success -> Client Details Configuration Failed!");
+				}
+		        return ResponseEntity.ok().body(new GenericResponse(genericResponse));
+			}
+		} else {
+			genericResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+	    	genericResponse.setError("Failure");
+	    	genericResponse.setMessage("Success -> Client Detail Request fields missing!");
+		}
+		
+		return ResponseEntity.ok().body(new GenericResponse(genericResponse));
+	}
+	
+	@PostMapping("/showall")
+	public ResponseEntity<GenericResponse> showallClients()
+			throws Exception {
+		GenericResponse genericResponse = new GenericResponse();
+		ClientDetailDto clientDetailDto = clientService.showAllClients();
+		if (clientDetailDto != null && clientDetailDto.getResultObj().length > 0) {
+			Object[] result = clientDetailDto.getResultObj();
+			List<ClientCreateResponse> clientCreateResponseList = (List<ClientCreateResponse>) result[0];
+			if (clientCreateResponseList != null && !clientCreateResponseList.isEmpty()) {
+				genericResponse.setValue(clientCreateResponseList);
+				genericResponse.setStatus(StatusCodeConstants.SELECT);
+				genericResponse.setError("Success");
+				genericResponse.setMessage("Success -> clients detail selected!");
+			} else {
+				genericResponse.setStatus(StatusCodeConstants.DATA_NOT_FOUND);
+				genericResponse.setError("Failure");
+				genericResponse.setMessage("Failure -> Clients Detail not found!");
+			}
+
+		} else {
+			genericResponse.setStatus(StatusCodeConstants.DATA_NOT_FOUND);
+			genericResponse.setError("Failure");
+			genericResponse.setMessage("Failure -> Clients Detail not found!");
+		}
+		return ResponseEntity.ok().body(new GenericResponse(genericResponse));
+	}
+
+	    	
+	
+
+}

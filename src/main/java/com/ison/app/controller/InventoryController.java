@@ -171,5 +171,26 @@ public class InventoryController {
     	}
     	 return ResponseEntity.ok().body(new GenericResponse(genericResponse));
 	}
+	
+	@PostMapping("/inventorymapping/client/showall")
+    public ResponseEntity<GenericResponse> getClientInventoryMappingList() throws Exception {
+		GenericResponse genericResponse = null;
+		InventoryDto inventoryDto = new InventoryDto();
+    	inventoryDto = inventoryService.getMappedInventoryList();
+    	if(inventoryDto.getResultList() != null && !inventoryDto.getResultList().isEmpty()) {
+    		genericResponse = new GenericResponse();
+    		genericResponse.setStatus(1010);
+    		genericResponse.setMessage("show All Client!");
+    		genericResponse.setError("Success");
+    		genericResponse.setValue(inventoryDto.getResultList());
+    	} else {
+    		genericResponse = new GenericResponse();
+    		genericResponse.setStatus(1001);
+    		genericResponse.setMessage("Clients not found!");
+    		genericResponse.setError("Failure");
+    	}
+    	 return ResponseEntity.ok().body(new GenericResponse(genericResponse));
+	}
+	
 
 }

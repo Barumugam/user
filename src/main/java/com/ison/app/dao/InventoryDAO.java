@@ -22,5 +22,7 @@ public interface InventoryDAO {
 	public InventoryDto checkInvenMasterAlreadyExists(InventoryDto inventoryDto) throws Exception; 
 	
 	public InventoryMaster findInventory(InventoryDto inventoryDto) throws Exception;
+	
+	public InventoryDto getMappedInventoryList() throws Exception; 
 
 }

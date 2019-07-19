@@ -14,6 +14,14 @@ public class InventoryMappingRequest {
 
 	private BigInteger inventoryRegionId;
 	
+	public String inventoryRegionName;
+	
+	public String inventoryCenterName;
+	
+	public String inventoryClientName;
+	
+	public String inventoryProcessName;
+	
 	private String status;
 
 	public BigInteger getId() {
@@ -64,6 +72,37 @@ public class InventoryMappingRequest {
 		this.inventoryRegionId = inventoryRegionId;
 	}
 
+	public String getInventoryRegionName() {
+		return inventoryRegionName;
+	}
+
+	public void setInventoryRegionName(String inventoryRegionName) {
+		this.inventoryRegionName = inventoryRegionName;
+	}
+
+	public String getInventoryCenterName() {
+		return inventoryCenterName;
+	}
+
+	public void setInventoryCenterName(String inventoryCenterName) {
+		this.inventoryCenterName = inventoryCenterName;
+	}
+
+	public String getInventoryClientName() {
+		return inventoryClientName;
+	}
+
+	public void setInventoryClientName(String inventoryClientName) {
+		this.inventoryClientName = inventoryClientName;
+	}
+
+	public String getInventoryProcessName() {
+		return inventoryProcessName;
+	}
+
+	public void setInventoryProcessName(String inventoryProcessName) {
+		this.inventoryProcessName = inventoryProcessName;
+	}
 	
 	
 }

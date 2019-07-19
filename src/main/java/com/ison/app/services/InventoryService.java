@@ -17,5 +17,7 @@ public interface InventoryService {
 	public boolean checkInvenMapAlreadyExists(InventoryDto inventoryDto) throws Exception;
 	
 	public boolean checkInvenMasterAlreadyExists(InventoryDto inventoryDto) throws Exception; 
+	
+	public InventoryDto getMappedInventoryList() throws Exception; 
 
 }

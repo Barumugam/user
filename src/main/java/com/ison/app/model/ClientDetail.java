@@ -1,9 +1,24 @@
 package com.ison.app.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 
 /**
@@ -19,13 +34,7 @@ public class ClientDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="AUTOGEN_CLIENT_DETAILS_ID")
-	private String autogenClientDetailsId;
-
-	@Column(name="CONTACT_NUMBER")
-	private String contactNumber;
-
-	@Column(name="CONTACT_PERSON_NAME")
-	private String contactPersonName;
+	private BigInteger autogenClientDetailsId;
 
 	@Column(name="CREATED_BY")
 	private String createdBy;
@@ -35,49 +44,55 @@ public class ClientDetail implements Serializable {
 	@Column(name="INVENTORY_CENTER_ID")
 	private BigInteger inventoryCenterId;
 
+	@Column(name="INVENTORY_CENTER_NAME")
+	private String inventoryCenterName;
+
 	@Column(name="INVENTORY_CLIENT_ID")
 	private BigInteger inventoryClientId;
 
-	@Column(name="NOTIFICATION_STATUS")
-	private String notificationStatus;
+	@Column(name="INVENTORY_CLIENT_NAME")
+	private String inventoryClientName;
 
+	@Column(name="INVENTORY_REGION_ID")
+	private BigInteger inventoryRegionId;
+
+	@Column(name="INVENTORY_REGION_NAME")
+	private String inventoryRegionName;
+
+	@Lob
+	private byte[] logo;
+
+	@Column(name="MOBILE_NUMBER")
+	private String mobileNumber;
+
+	@Generated(GenerationTime.INSERT)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="REC_ADD_DT")
-	private Timestamp recAddDt;
+	private Date recAddDt;
 
+	@Generated(GenerationTime.ALWAYS)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="REC_UPDATE_DT")
-	private Timestamp recUpdateDt;
-
-	@Column(name="REPORT_FREQUENCY_ID")
-	private BigInteger reportFrequencyId;
+	private Date recUpdateDt;
 
 	@Column(name="UPDATED_BY")
 	private String updatedBy;
+	
+	private String status;
+
+	//bi-directional many-to-one association to ContactDetail
+	@OneToMany(mappedBy="clientDetail")
+	private List<ContactDetail> contactDetails;
 
 	public ClientDetail() {
 	}
 
-	public String getAutogenClientDetailsId() {
+	public BigInteger getAutogenClientDetailsId() {
 		return this.autogenClientDetailsId;
 	}
 
-	public void setAutogenClientDetailsId(String autogenClientDetailsId) {
+	public void setAutogenClientDetailsId(BigInteger autogenClientDetailsId) {
 		this.autogenClientDetailsId = autogenClientDetailsId;
-	}
-
-	public String getContactNumber() {
-		return this.contactNumber;
-	}
-
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-
-	public String getContactPersonName() {
-		return this.contactPersonName;
-	}
-
-	public void setContactPersonName(String contactPersonName) {
-		this.contactPersonName = contactPersonName;
 	}
 
 	public String getCreatedBy() {
@@ -104,6 +119,14 @@ public class ClientDetail implements Serializable {
 		this.inventoryCenterId = inventoryCenterId;
 	}
 
+	public String getInventoryCenterName() {
+		return this.inventoryCenterName;
+	}
+
+	public void setInventoryCenterName(String inventoryCenterName) {
+		this.inventoryCenterName = inventoryCenterName;
+	}
+
 	public BigInteger getInventoryClientId() {
 		return this.inventoryClientId;
 	}
@@ -112,36 +135,60 @@ public class ClientDetail implements Serializable {
 		this.inventoryClientId = inventoryClientId;
 	}
 
-	public String getNotificationStatus() {
-		return this.notificationStatus;
+	public String getInventoryClientName() {
+		return this.inventoryClientName;
 	}
 
-	public void setNotificationStatus(String notificationStatus) {
-		this.notificationStatus = notificationStatus;
+	public void setInventoryClientName(String inventoryClientName) {
+		this.inventoryClientName = inventoryClientName;
 	}
 
-	public Timestamp getRecAddDt() {
+	public BigInteger getInventoryRegionId() {
+		return this.inventoryRegionId;
+	}
+
+	public void setInventoryRegionId(BigInteger inventoryRegionId) {
+		this.inventoryRegionId = inventoryRegionId;
+	}
+
+	public String getInventoryRegionName() {
+		return this.inventoryRegionName;
+	}
+
+	public void setInventoryRegionName(String inventoryRegionName) {
+		this.inventoryRegionName = inventoryRegionName;
+	}
+
+	public byte[] getLogo() {
+		return this.logo;
+	}
+
+	public void setLogo(byte[] logo) {
+		this.logo = logo;
+	}
+
+	public String getMobileNumber() {
+		return this.mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public Date getRecAddDt() {
 		return this.recAddDt;
 	}
 
-	public void setRecAddDt(Timestamp recAddDt) {
+	public void setRecAddDt(Date recAddDt) {
 		this.recAddDt = recAddDt;
 	}
 
-	public Timestamp getRecUpdateDt() {
+	public Date getRecUpdateDt() {
 		return this.recUpdateDt;
 	}
 
-	public void setRecUpdateDt(Timestamp recUpdateDt) {
+	public void setRecUpdateDt(Date recUpdateDt) {
 		this.recUpdateDt = recUpdateDt;
-	}
-
-	public BigInteger getReportFrequencyId() {
-		return this.reportFrequencyId;
-	}
-
-	public void setReportFrequencyId(BigInteger reportFrequencyId) {
-		this.reportFrequencyId = reportFrequencyId;
 	}
 
 	public String getUpdatedBy() {
@@ -150,6 +197,36 @@ public class ClientDetail implements Serializable {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public List<ContactDetail> getContactDetails() {
+		return this.contactDetails;
+	}
+
+	public void setContactDetails(List<ContactDetail> contactDetails) {
+		this.contactDetails = contactDetails;
+	}
+
+	public ContactDetail addContactDetail(ContactDetail contactDetail) {
+		getContactDetails().add(contactDetail);
+		contactDetail.setClientDetail(this);
+
+		return contactDetail;
+	}
+
+	public ContactDetail removeContactDetail(ContactDetail contactDetail) {
+		getContactDetails().remove(contactDetail);
+		contactDetail.setClientDetail(null);
+
+		return contactDetail;
 	}
 
 }

@@ -3,32 +3,31 @@ package com.ison.app.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.math.BigInteger;
 
 
 /**
- * The persistent class for the client_center_map database table.
+ * The persistent class for the frequency_master database table.
  * 
  */
 @Entity
-@Table(name="client_center_map")
-@NamedQuery(name="ClientCenterMap.findAll", query="SELECT c FROM ClientCenterMap c")
-public class ClientCenterMap implements Serializable {
+@Table(name="frequency_master")
+@NamedQuery(name="FrequencyMaster.findAll", query="SELECT f FROM FrequencyMaster f")
+public class FrequencyMaster implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="AUTOGEN_CLIENT_CENTER_MAP_ID")
-	private String autogenClientCenterMapId;
+	@Column(name="AUTOGEN_FREQUENCY_MASTER_ID")
+	private String autogenFrequencyMasterId;
 
 	@Column(name="CREATED_BY")
 	private String createdBy;
 
-	@Column(name="INVENTORY_CENTER_ID")
-	private BigInteger inventoryCenterId;
+	@Column(name="DURATION_DAYS_COUNT")
+	private String durationDaysCount;
 
-	@Column(name="INVENTORY_CLIENT_ID")
-	private BigInteger inventoryClientId;
+	@Column(name="FREQUENCY_NAME")
+	private String frequencyName;
 
 	@Column(name="REC_ADD_DT")
 	private Timestamp recAddDt;
@@ -41,15 +40,15 @@ public class ClientCenterMap implements Serializable {
 	@Column(name="UPDATED_BY")
 	private String updatedBy;
 
-	public ClientCenterMap() {
+	public FrequencyMaster() {
 	}
 
-	public String getAutogenClientCenterMapId() {
-		return this.autogenClientCenterMapId;
+	public String getAutogenFrequencyMasterId() {
+		return this.autogenFrequencyMasterId;
 	}
 
-	public void setAutogenClientCenterMapId(String autogenClientCenterMapId) {
-		this.autogenClientCenterMapId = autogenClientCenterMapId;
+	public void setAutogenFrequencyMasterId(String autogenFrequencyMasterId) {
+		this.autogenFrequencyMasterId = autogenFrequencyMasterId;
 	}
 
 	public String getCreatedBy() {
@@ -60,20 +59,20 @@ public class ClientCenterMap implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public BigInteger getInventoryCenterId() {
-		return this.inventoryCenterId;
+	public String getDurationDaysCount() {
+		return this.durationDaysCount;
 	}
 
-	public void setInventoryCenterId(BigInteger inventoryCenterId) {
-		this.inventoryCenterId = inventoryCenterId;
+	public void setDurationDaysCount(String durationDaysCount) {
+		this.durationDaysCount = durationDaysCount;
 	}
 
-	public BigInteger getInventoryClientId() {
-		return this.inventoryClientId;
+	public String getFrequencyName() {
+		return this.frequencyName;
 	}
 
-	public void setInventoryClientId(BigInteger inventoryClientId) {
-		this.inventoryClientId = inventoryClientId;
+	public void setFrequencyName(String frequencyName) {
+		this.frequencyName = frequencyName;
 	}
 
 	public Timestamp getRecAddDt() {

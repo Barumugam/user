@@ -47,6 +47,18 @@ public class InventoryMapping implements Serializable {
 
 	@Column(name="INVENTORY_REGION_ID")
 	private BigInteger inventoryRegionId;
+	
+	@Column(name="INVENTORY_REGION_NAME")
+	private String inventoryRegionName;
+	
+	@Column(name="INVENTORY_CENTER_NAME")
+	private String inventoryCenterName;
+	
+	@Column(name="INVENTORY_CLIENT_NAME")
+	private String inventoryClientName;
+	
+	@Column(name="INVENTORY_PROCESS_NAME")
+	private String inventoryProcessName;
 
 	@Generated(GenerationTime.INSERT)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -145,5 +157,39 @@ public class InventoryMapping implements Serializable {
 	public void setRecUpdateDt(Date recUpdateDt) {
 		this.recUpdateDt = recUpdateDt;
 	}
+
+	public String getInventoryRegionName() {
+		return inventoryRegionName;
+	}
+
+	public void setInventoryRegionName(String inventoryRegionName) {
+		this.inventoryRegionName = inventoryRegionName;
+	}
+
+	public String getInventoryCenterName() {
+		return inventoryCenterName;
+	}
+
+	public void setInventoryCenterName(String inventoryCenterName) {
+		this.inventoryCenterName = inventoryCenterName;
+	}
+
+	public String getInventoryClientName() {
+		return inventoryClientName;
+	}
+
+	public void setInventoryClientName(String inventoryClientName) {
+		this.inventoryClientName = inventoryClientName;
+	}
+
+	public String getInventoryProcessName() {
+		return inventoryProcessName;
+	}
+
+	public void setInventoryProcessName(String inventoryProcessName) {
+		this.inventoryProcessName = inventoryProcessName;
+	}
+
+
 
 }

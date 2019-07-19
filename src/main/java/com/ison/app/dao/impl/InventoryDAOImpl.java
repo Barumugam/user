@@ -1,5 +1,6 @@
 package com.ison.app.dao.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,11 @@ import com.ison.app.constants.AppicationConstants;
 import com.ison.app.dao.InventoryDAO;
 import com.ison.app.model.InventoryMapping;
 import com.ison.app.model.InventoryMaster;
+import com.ison.app.model.KeyValueObject;
+import com.ison.app.shared.dto.CenterKVDto;
+import com.ison.app.shared.dto.ClientKVDto;
 import com.ison.app.shared.dto.InventoryDto;
+import com.ison.app.shared.dto.RegionKVDto;
 import com.ison.app.util.CommonUtil;
 
 @Repository("InventoryDAO")
@@ -268,6 +273,68 @@ public class InventoryDAOImpl implements InventoryDAO{
 		}
 		
 		return inventoryMaster;
+	}
+	
+	public InventoryDto getMappedInventoryList() throws Exception {
+		List<Object[]> clientResult = null;
+		List<Object[]> regionResult = null;
+		List<Object[]> centerResult = null;
+		List<Object[]> processResult = null;
+		List<ClientKVDto> clientKVDtoList = new ArrayList<>();
+		InventoryDto inventoryDto = new InventoryDto();
+		Query qryObj = null;
+		try {
+			qryObj = firstEntityManager.createNativeQuery("SELECT DISTINCT INVENTORY_CLIENT_ID, INVENTORY_CLIENT_NAME FROM inventory_mapping ORDER BY INVENTORY_CLIENT_NAME");
+			clientResult = qryObj.getResultList(); 
+			for (Object[] clientObj : clientResult) {
+				
+				qryObj = null;
+				qryObj = firstEntityManager.createNativeQuery("SELECT DISTINCT INVENTORY_REGION_ID, INVENTORY_REGION_NAME FROM inventory_mapping WHERE INVENTORY_CLIENT_ID=:CLIENTID ORDER BY INVENTORY_REGION_NAME");
+				qryObj.setParameter("CLIENTID", (BigInteger)clientObj[0]);
+				regionResult = qryObj.getResultList();
+				List<RegionKVDto> regionKVDtoList = new ArrayList<>(); 
+				for (Object[] regionObj : regionResult) {
+					qryObj = null;
+					qryObj = firstEntityManager.createNativeQuery("SELECT DISTINCT INVENTORY_CENTER_ID, INVENTORY_CENTER_NAME FROM inventory_mapping WHERE INVENTORY_CLIENT_ID=:CLIENTID AND INVENTORY_REGION_ID=:REGIONID ORDER BY INVENTORY_CENTER_NAME");
+					qryObj.setParameter("REGIONID", (BigInteger)regionObj[0]);
+					qryObj.setParameter("CLIENTID", (BigInteger)clientObj[0]);
+					centerResult = qryObj.getResultList();
+					List<CenterKVDto> centerKVDtoList = new ArrayList<>(); 
+					for (Object[] centerObj : centerResult) {
+						qryObj = null;
+						qryObj = firstEntityManager.createNativeQuery("SELECT DISTINCT INVENTORY_PROCESS_ID, INVENTORY_PROCESS_NAME FROM inventory_mapping WHERE INVENTORY_CLIENT_ID=:CLIENTID AND INVENTORY_REGION_ID=:REGIONID AND INVENTORY_CENTER_ID=:CENTERID ORDER BY INVENTORY_PROCESS_NAME");
+						qryObj.setParameter("CENTERID", (BigInteger)centerObj[0]);
+						qryObj.setParameter("REGIONID", (BigInteger)regionObj[0]);
+						qryObj.setParameter("CLIENTID", (BigInteger)clientObj[0]);
+						processResult = qryObj.getResultList();
+						List<KeyValueObject> processKVDtoList = new ArrayList<>();
+						for (Object[] processObj : processResult) {
+							KeyValueObject processKVDto = new KeyValueObject((BigInteger)processObj[0], (String)processObj[1], "ACTIVE");
+							processKVDtoList.add(processKVDto);
+						}
+						
+						CenterKVDto centerKVDto = new CenterKVDto((BigInteger)centerObj[0], (String)centerObj[1], "ACTIVE",processKVDtoList);
+						centerKVDtoList.add(centerKVDto);
+					}
+					
+					RegionKVDto regionKVDto = new RegionKVDto((BigInteger)regionObj[0], (String)regionObj[1], "ACTIVE",centerKVDtoList);
+					regionKVDtoList.add(regionKVDto);
+					
+				}
+				
+				ClientKVDto clientKVDto = new ClientKVDto((BigInteger)clientObj[0], (String)clientObj[1], "ACTIVE",regionKVDtoList);
+				clientKVDtoList.add(clientKVDto);
+			}
+			
+		} catch (Exception e) {
+			logger.info("Exception :: InventoryDAOImpl :: getMappedInventoryList() : " + e);
+		} finally {
+			firstEntityManager.close();
+		}
+		
+		inventoryDto.setResultList(clientKVDtoList);
+		return inventoryDto;
+		
 	}
 
 }

@@ -15,6 +15,14 @@ public class InventoryMappingResponse {
 
 	private BigInteger inventoryRegionId;
 	
+	public String inventoryRegionName;
+	
+	public String inventoryCenterName;
+	
+	public String inventoryClientName;
+	
+	public String inventoryProcessName;
+	
 	public InventoryMappingResponse() {}
 	
 	public InventoryMappingResponse(InventoryMappingResponse inventoryMappingResponse) {
@@ -23,6 +31,11 @@ public class InventoryMappingResponse {
 		this.inventoryCenterId = inventoryMappingResponse.inventoryCenterId;
 		this.inventoryClientId = inventoryMappingResponse.inventoryClientId;
 		this.inventoryProcessId = inventoryMappingResponse.inventoryProcessId;
+		this.inventoryCenterName = inventoryMappingResponse.inventoryCenterName;
+		this.inventoryClientName = inventoryMappingResponse.inventoryClientName;
+		this.inventoryProcessName = inventoryMappingResponse.inventoryProcessName;
+		this.inventoryRegionName = inventoryMappingResponse.inventoryRegionName;
+		
 	}
 
 	public BigInteger getId() {
@@ -63,6 +76,38 @@ public class InventoryMappingResponse {
 
 	public void setInventoryRegionId(BigInteger inventoryRegionId) {
 		this.inventoryRegionId = inventoryRegionId;
+	}
+
+	public String getInventoryRegionName() {
+		return inventoryRegionName;
+	}
+
+	public void setInventoryRegionName(String inventoryRegionName) {
+		this.inventoryRegionName = inventoryRegionName;
+	}
+
+	public String getInventoryCenterName() {
+		return inventoryCenterName;
+	}
+
+	public void setInventoryCenterName(String inventoryCenterName) {
+		this.inventoryCenterName = inventoryCenterName;
+	}
+
+	public String getInventoryClientName() {
+		return inventoryClientName;
+	}
+
+	public void setInventoryClientName(String inventoryClientName) {
+		this.inventoryClientName = inventoryClientName;
+	}
+
+	public String getInventoryProcessName() {
+		return inventoryProcessName;
+	}
+
+	public void setInventoryProcessName(String inventoryProcessName) {
+		this.inventoryProcessName = inventoryProcessName;
 	}
 
 	
