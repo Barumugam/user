@@ -13,5 +13,6 @@ public class StatusCodeConstants {
 	public static int SEARCH = 1008;  
 	public static int NOT_MAPPED = 1009;  
 	public static int SELECT = 1010;  
+	public static int EXIST = 1011;  
 
 }

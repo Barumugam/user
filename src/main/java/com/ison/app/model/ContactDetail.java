@@ -59,15 +59,7 @@ public class ContactDetail implements Serializable {
 	
 	private String status;
 
-	//bi-directional many-to-one association to ClientReportMap
-	@OneToMany(mappedBy="contactDetail")
-	private List<ClientReportMap> clientReportMaps;
-
-	//bi-directional many-to-one association to ClientDetail
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="AUTOGEN_CONTACT_DETAILS_ID", referencedColumnName="AUTOGEN_CLIENT_DETAILS_ID", insertable=false, updatable=false)
-	private ClientDetail clientDetail;
-
+	
 	public ContactDetail() {
 	}
 
@@ -151,35 +143,6 @@ public class ContactDetail implements Serializable {
 		this.status = status;
 	}
 
-	public List<ClientReportMap> getClientReportMaps() {
-		return this.clientReportMaps;
-	}
-
-	public void setClientReportMaps(List<ClientReportMap> clientReportMaps) {
-		this.clientReportMaps = clientReportMaps;
-	}
-
-	public ClientReportMap addClientReportMap(ClientReportMap clientReportMap) {
-		getClientReportMaps().add(clientReportMap);
-		clientReportMap.setContactDetail(this);
-
-		return clientReportMap;
-	}
-
-	public ClientReportMap removeClientReportMap(ClientReportMap clientReportMap) {
-		getClientReportMaps().remove(clientReportMap);
-		clientReportMap.setContactDetail(null);
-
-		return clientReportMap;
-	}
-
-	public ClientDetail getClientDetail() {
-		return this.clientDetail;
-	}
-
-	public void setClientDetail(ClientDetail clientDetail) {
-		this.clientDetail = clientDetail;
-	}
 
 	public BigInteger getAutogenClientDetailsId() {
 		return autogenClientDetailsId;

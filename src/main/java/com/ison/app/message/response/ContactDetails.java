@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ContactDetails {
 	
-	private BigInteger contactDetailId;
+	private BigInteger contactDetailsId;
 	private String email;
 	private String mobileNumber;
 	private String notificationStatus;
@@ -13,11 +13,11 @@ public class ContactDetails {
 	private String status;
 	private List<ClientReportMapCreateResponse> clientReportMaps;
 	
-	public BigInteger getContactDetailId() {
-		return contactDetailId;
+	public BigInteger getContactDetailsId() {
+		return contactDetailsId;
 	}
-	public void setContactDetailId(BigInteger contactDetailId) {
-		this.contactDetailId = contactDetailId;
+	public void setContactDetailsId(BigInteger contactDetailsId) {
+		this.contactDetailsId = contactDetailsId;
 	}
 
 	public String getEmail() {

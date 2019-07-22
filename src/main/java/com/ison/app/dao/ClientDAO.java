@@ -21,5 +21,9 @@ public interface ClientDAO {
 	public ClientDetailDto getContactDetails(ClientDetailDto clientDetailDto) throws Exception;
 	
 	public ClientDetailDto getClientReportMapDetails(ContactDetailDto contactDetailDto) throws Exception;
+	
+	public ClientDetailDto checkClientDetailsAlreadyExists(ClientDetailDto clientDetailDto) throws Exception;
+	
+	public ClientDetailDto getProcessDetails(ClientDetailDto ClientDetailDto) throws Exception; 
 
 }

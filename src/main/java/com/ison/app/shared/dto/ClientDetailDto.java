@@ -17,8 +17,9 @@ public class ClientDetailDto {
 	public String inventoryRegionName;
 	public byte[] logo;
 	public String mobileNumber;
-	public Timestamp recAddDt;
+	/*public Timestamp recAddDt;
 	public Timestamp recUpdateDt;
+	*/
 	public String updatedBy;
 	public String status;
 	//bi-directional many-to-one association to ContactDetail
@@ -95,7 +96,7 @@ public class ClientDetailDto {
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-	public Timestamp getRecAddDt() {
+	/*public Timestamp getRecAddDt() {
 		return recAddDt;
 	}
 	public void setRecAddDt(Timestamp recAddDt) {
@@ -107,6 +108,7 @@ public class ClientDetailDto {
 	public void setRecUpdateDt(Timestamp recUpdateDt) {
 		this.recUpdateDt = recUpdateDt;
 	}
+	*/
 	public String getUpdatedBy() {
 		return updatedBy;
 	}

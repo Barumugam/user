@@ -19,6 +19,14 @@ public class CommonUtil {
 		 BeanUtils.copyProperties(source, target);
 	}
 	
+	public static boolean nullCheckBigInt(Object value) {
+		boolean flag = false;
+		if (value != null) {
+			flag = true;
+		}
+		return flag;
+	}
+	
 	public static void getMapResultObj(List<Object[]> resultObjList, Map<String, String> courAgencyNameMap) {
 		if (resultObjList != null && !resultObjList.isEmpty()) {
 			for (Object[] courAgencyName : resultObjList) {

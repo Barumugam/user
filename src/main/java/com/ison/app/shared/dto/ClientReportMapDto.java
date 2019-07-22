@@ -1,7 +1,6 @@
 package com.ison.app.shared.dto;
 
 import java.math.BigInteger;
-import java.sql.Timestamp;
 
 public class ClientReportMapDto {
 
@@ -13,8 +12,6 @@ public class ClientReportMapDto {
 	public String frequencyName;
 	public BigInteger inventoryProcessId;
 	public String inventoryProcessName;
-	public Timestamp recAddDt;
-	public Timestamp recUpdateDt;
 	public String reportName;
 	public String status;
 	public String updatedBy;
@@ -65,18 +62,6 @@ public class ClientReportMapDto {
 	}
 	public void setInventoryProcessName(String inventoryProcessName) {
 		this.inventoryProcessName = inventoryProcessName;
-	}
-	public Timestamp getRecAddDt() {
-		return recAddDt;
-	}
-	public void setRecAddDt(Timestamp recAddDt) {
-		this.recAddDt = recAddDt;
-	}
-	public Timestamp getRecUpdateDt() {
-		return recUpdateDt;
-	}
-	public void setRecUpdateDt(Timestamp recUpdateDt) {
-		this.recUpdateDt = recUpdateDt;
 	}
 	public String getReportName() {
 		return reportName;

@@ -21,9 +21,9 @@ import com.ison.app.message.request.ClientReportMapCreateRequest;
 import com.ison.app.message.request.ContactDetails;
 import com.ison.app.message.response.ClientCreateResponse;
 import com.ison.app.message.response.GenericResponse;
-import com.ison.app.model.ClientReportMap;
 import com.ison.app.services.ClientService;
 import com.ison.app.shared.dto.ClientDetailDto;
+import com.ison.app.shared.dto.ClientReportMapDto;
 import com.ison.app.shared.dto.ContactDetailDto;
 import com.ison.app.util.CommonUtil;
 
@@ -46,17 +46,28 @@ public class ClientController {
 					CommonUtil.copyProperties(clientCreateRequest, clientDetailDto);
 					CommonUtil.copyProperties(clientRegionRequest, clientDetailDto);
 					CommonUtil.copyProperties(clientCenterRequest, clientDetailDto);
+					if(clientCenterRequest.getClientDetailsId() != null) {
+						clientDetailDto.setAutogenClientDetailsId(clientCenterRequest.getClientDetailsId());
+					}
 					List<ContactDetailDto> contactDetailDtos = new ArrayList<>();
 					for (ContactDetails contactDetails : clientCenterRequest.getContactDetails()) {
 						ContactDetailDto contactDetailDto = new ContactDetailDto();
 						CommonUtil.copyProperties(contactDetails, contactDetailDto);
-						List<ClientReportMap> clientReportMaps = new ArrayList<>();
-						for (ClientReportMapCreateRequest clientReportMapCreateRequest : contactDetails.getClientReportMaps()) {
-							ClientReportMap  clientReportMap = new ClientReportMap();
-							CommonUtil.copyProperties(clientReportMapCreateRequest, clientReportMap);	
-							clientReportMaps.add(clientReportMap);
+						
+						if(contactDetails.getContactDetailsId() != null) {
+							contactDetailDto.setAutogenContactDetailsId(contactDetails.getContactDetailsId());	
 						}
-						contactDetailDto.setClientReportMaps(clientReportMaps);
+						
+						List<ClientReportMapDto> clientReportMapsList = new ArrayList<>();
+						for (ClientReportMapCreateRequest clientReportMapCreateRequest : contactDetails.getClientReportMaps()) {
+							ClientReportMapDto  clientReportMap = new ClientReportMapDto();
+							CommonUtil.copyProperties(clientReportMapCreateRequest, clientReportMap);	
+							if(clientReportMapCreateRequest.getClientReportMapId() != null) {
+								clientReportMap.setAutogenClientReportMapId(clientReportMapCreateRequest.getClientReportMapId());
+							}
+							clientReportMapsList.add(clientReportMap);
+						}
+						contactDetailDto.setClientReportMaps(clientReportMapsList);
 						contactDetailDtos.add(contactDetailDto);
 					}
 					clientDetailDto.setContactDetails(contactDetailDtos);
@@ -64,7 +75,16 @@ public class ClientController {
 				}
 			}
 			
-			ClientDetailDto clientDetailDto = clientService.create(clientDetailDtoList);
+			if(clientDetailDtoList != null && !clientDetailDtoList.isEmpty()) {
+			/*ClientDetailDto clientDetailDto = clientService.checkClientDetailsAlreadyExists(clientDetailDtoList.get(0));
+			if(clientDetailDto.flag && clientDetailDtoList.get(0).autogenClientDetailsId !=null) {
+			    	genericResponse.setStatus(StatusCodeConstants.EXIST);
+			    	genericResponse.setError("Failure");
+			    	genericResponse.setMessage("Failure -> Client Details already configured!");
+			    	return ResponseEntity.ok().body(new GenericResponse(genericResponse));
+			}*/
+			
+				ClientDetailDto clientDetailDto = clientService.create(clientDetailDtoList);
 			if(clientDetailDto != null && clientDetailDto.getResultObj().length > 0) {
 				Object[] result = clientDetailDto.getResultObj();
 				boolean flag = (boolean) result[0];
@@ -78,6 +98,7 @@ public class ClientController {
 			    	genericResponse.setMessage("Success -> Client Details Configuration Failed!");
 				}
 		        return ResponseEntity.ok().body(new GenericResponse(genericResponse));
+			}
 			}
 		} else {
 			genericResponse.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -114,8 +135,34 @@ public class ClientController {
 		}
 		return ResponseEntity.ok().body(new GenericResponse(genericResponse));
 	}
+	
+	//@PostMapping("/client")
+	public ResponseEntity<GenericResponse> getClientDetails()
+			throws Exception {
+		GenericResponse genericResponse = new GenericResponse();
+		ClientDetailDto clientDetailDto = clientService.showAllClients();
+		if (clientDetailDto != null && clientDetailDto.getResultObj().length > 0) {
+			Object[] result = clientDetailDto.getResultObj();
+			List<ClientCreateResponse> clientCreateResponseList = (List<ClientCreateResponse>) result[0];
+			if (clientCreateResponseList != null && !clientCreateResponseList.isEmpty()) {
+				genericResponse.setValue(clientCreateResponseList);
+				genericResponse.setStatus(StatusCodeConstants.SELECT);
+				genericResponse.setError("Success");
+				genericResponse.setMessage("Success -> clients detail selected!");
+			} else {
+				genericResponse.setStatus(StatusCodeConstants.DATA_NOT_FOUND);
+				genericResponse.setError("Failure");
+				genericResponse.setMessage("Failure -> Clients Detail not found!");
+			}
 
-	    	
+		} else {
+			genericResponse.setStatus(StatusCodeConstants.DATA_NOT_FOUND);
+			genericResponse.setError("Failure");
+			genericResponse.setMessage("Failure -> Clients Detail not found!");
+		}
+		return ResponseEntity.ok().body(new GenericResponse(genericResponse));
+	}
+
 	
 
 }

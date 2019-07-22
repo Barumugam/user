@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 public class ClientReportMapCreateRequest {
 	
+	public BigInteger clientReportMapId;
 	public BigInteger autogenFrequencyMasterId;
 	public BigInteger autogenReportMasterId;
 	public String frequencyName;
@@ -11,6 +12,8 @@ public class ClientReportMapCreateRequest {
 	public String inventoryProcessName;
 	public String reportName;
 	public String status;
+	
+	
 	public BigInteger getAutogenFrequencyMasterId() {
 		return autogenFrequencyMasterId;
 	}
@@ -53,4 +56,11 @@ public class ClientReportMapCreateRequest {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public BigInteger getClientReportMapId() {
+		return clientReportMapId;
+	}
+	public void setClientReportMapId(BigInteger clientReportMapId) {
+		this.clientReportMapId = clientReportMapId;
+	}
+	
 }

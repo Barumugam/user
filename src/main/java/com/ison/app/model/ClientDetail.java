@@ -80,10 +80,6 @@ public class ClientDetail implements Serializable {
 	
 	private String status;
 
-	//bi-directional many-to-one association to ContactDetail
-	@OneToMany(mappedBy="clientDetail")
-	private List<ContactDetail> contactDetails;
-
 	public ClientDetail() {
 	}
 
@@ -206,27 +202,4 @@ public class ClientDetail implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public List<ContactDetail> getContactDetails() {
-		return this.contactDetails;
-	}
-
-	public void setContactDetails(List<ContactDetail> contactDetails) {
-		this.contactDetails = contactDetails;
-	}
-
-	public ContactDetail addContactDetail(ContactDetail contactDetail) {
-		getContactDetails().add(contactDetail);
-		contactDetail.setClientDetail(this);
-
-		return contactDetail;
-	}
-
-	public ContactDetail removeContactDetail(ContactDetail contactDetail) {
-		getContactDetails().remove(contactDetail);
-		contactDetail.setClientDetail(null);
-
-		return contactDetail;
-	}
-
 }

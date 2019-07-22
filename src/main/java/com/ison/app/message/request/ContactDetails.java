@@ -1,9 +1,11 @@
 package com.ison.app.message.request;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class ContactDetails {
 	
+	private BigInteger contactDetailsId;
 	private String email;
 	private String mobileNumber;
 	private String notificationStatus;
@@ -45,6 +47,12 @@ public class ContactDetails {
 	}
 	public void setClientReportMaps(List<ClientReportMapCreateRequest> clientReportMaps) {
 		this.clientReportMaps = clientReportMaps;
+	}
+	public BigInteger getContactDetailsId() {
+		return contactDetailsId;
+	}
+	public void setContactDetailsId(BigInteger contactDetailsId) {
+		this.contactDetailsId = contactDetailsId;
 	}
 
 }

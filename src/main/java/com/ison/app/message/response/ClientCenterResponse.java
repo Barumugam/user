@@ -13,14 +13,15 @@ public class ClientCenterResponse {
 	private MultipartFile file;
 	private byte[] logo;
 	private List<ContactDetails>  contactDetails;
+	private List<ProcessResponse> processes;
 	
-	public BigInteger getContactDetailsId() {
+	
+	public BigInteger getClientDetailsId() {
 		return clientDetailsId;
 	}
-	public void setContactDetailsId(BigInteger clientDetailsId) {
+	public void setClientDetailsId(BigInteger clientDetailsId) {
 		this.clientDetailsId = clientDetailsId;
 	}
-	
 	public BigInteger getInventoryCenterId() {
 		return inventoryCenterId;
 	}
@@ -51,7 +52,11 @@ public class ClientCenterResponse {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	
-	
+	public List<ProcessResponse> getProcesses() {
+		return processes;
+	}
+	public void setProcesses(List<ProcessResponse> processes) {
+		this.processes = processes;
+	}
 
 }

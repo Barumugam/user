@@ -4,8 +4,6 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.ison.app.model.ClientReportMap;
-
 public class ContactDetailDto {
 	
 	public BigInteger autogenContactDetailsId;
@@ -19,7 +17,7 @@ public class ContactDetailDto {
 	public String updatedBy;
 	public String status;
 	//bi-directional many-to-one association to ClientReportMap
-	public List<ClientReportMap> clientReportMaps;
+	public List<ClientReportMapDto> clientReportMaps;
 	public BigInteger getAutogenContactDetailsId() {
 		return autogenContactDetailsId;
 	}
@@ -80,10 +78,10 @@ public class ContactDetailDto {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public List<ClientReportMap> getClientReportMaps() {
+	public List<ClientReportMapDto> getClientReportMaps() {
 		return clientReportMaps;
 	}
-	public void setClientReportMaps(List<ClientReportMap> clientReportMaps) {
+	public void setClientReportMaps(List<ClientReportMapDto> clientReportMaps) {
 		this.clientReportMaps = clientReportMaps;
 	}
 	

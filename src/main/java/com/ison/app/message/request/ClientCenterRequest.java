@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ClientCenterRequest {
 	
+	private BigInteger clientDetailsId;
 	private BigInteger inventoryCenterId;
 	private String inventoryCenterName;
 	private MultipartFile file;
@@ -41,6 +42,12 @@ public class ClientCenterRequest {
 	}
 	public void setFile(MultipartFile file) {
 		this.file = file;
+	}
+	public BigInteger getClientDetailsId() {
+		return clientDetailsId;
+	}
+	public void setClientDetailsId(BigInteger clientDetailsId) {
+		this.clientDetailsId = clientDetailsId;
 	}
 	
 	
